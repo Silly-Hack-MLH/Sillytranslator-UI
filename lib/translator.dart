@@ -144,52 +144,68 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Translator"),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextField(
-                  onChanged: (value) {
-                    url =
-                        "https://sillytranslator.herokuapp.com/translate?text=" +
-                            value.toString();
-                  },
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                TextField(
-                  controller: lang,
-                ),
-                RaisedButton(
-                  onPressed: () async {
-                    Data = await Getdata(url);
-                    var DecodedData = jsonDecode(Data);
-                    setState(() {
-                      res = DecodedData['result'];
-                    });
-                    print(res);
-                    trans(res);
-                  },
-                  child: Text("Ok Boomer!"),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Text(
+      appBar: AppBar(
+        title: Center(child: Text(" Mischief Translator")),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(50.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 40,
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                decoration: new InputDecoration(hintText: 'Text'),
+                style: TextStyle(fontSize: 20),
+                onChanged: (value) {
+                  url =
+                      "https://sillytranslator.herokuapp.com/translate?text=" +
+                          value.toString();
+                },
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                decoration: new InputDecoration(hintText: 'Language'),
+                style: TextStyle(fontSize: 20),
+                controller: lang,
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              RaisedButton(
+                textColor: Colors.white,
+                color: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                onPressed: () async {
+                  Data = await Getdata(url);
+                  var DecodedData = jsonDecode(Data);
+                  setState(() {
+                    res = DecodedData['result'];
+                  });
+                  print(res);
+                  trans(res);
+                },
+                child: Text('Ok Boomer!', style: TextStyle(fontSize: 17)),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Container(
+                child: Text(
                   out.toString(),
                   style: TextStyle(fontSize: 25),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
